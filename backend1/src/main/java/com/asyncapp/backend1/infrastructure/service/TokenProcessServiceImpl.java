@@ -30,7 +30,6 @@ public class TokenProcessServiceImpl implements TokenProcessService {
 
     @Override
     public void process(TokenDto tokenDto) {
-      log.info("Sent Solicitation {} to process queue", htmlEscape(tokenDto.toString()));
       var exchange = configRabbitmqProperties.getExchangeRequest();
       var routingKey = configRabbitmqProperties.getRoutingkey();
       var message = tokenMapper.toMessage(tokenDto);
@@ -38,6 +37,7 @@ public class TokenProcessServiceImpl implements TokenProcessService {
           m.getMessageProperties().getHeaders().put("solicitationId", tokenDto.getSolicitationId());
           return m;
       });
+      log.info("Sent Solicitation {} to process queue", htmlEscape(tokenDto.toString()));
     }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue_response}")
