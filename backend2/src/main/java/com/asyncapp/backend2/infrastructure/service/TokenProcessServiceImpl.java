@@ -59,6 +59,6 @@ public class TokenProcessServiceImpl implements TokenProcessService {
                 .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-        return new JwtDto(token);
+        return new JwtDto(tokenDto.getSolicitationId(), token);
     }
 }

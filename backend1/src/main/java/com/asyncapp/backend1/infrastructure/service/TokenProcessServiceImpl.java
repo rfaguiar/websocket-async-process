@@ -1,13 +1,11 @@
 package com.asyncapp.backend1.infrastructure.service;
 
-import com.asyncapp.backend1.infrastructure.model.ProcessMessage;
-import com.asyncapp.backend1.domain.model.TokenDto;
 import com.asyncapp.backend1.domain.mapper.TokenMapper;
+import com.asyncapp.backend1.domain.model.TokenDto;
 import com.asyncapp.backend1.domain.service.TokenProcessService;
 import com.asyncapp.backend1.infrastructure.queue.RabbitmqProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.web.util.HtmlUtils.htmlEscape;
@@ -38,11 +36,6 @@ public class TokenProcessServiceImpl implements TokenProcessService {
           return m;
       });
       log.info("Sent Solicitation {} to process queue", htmlEscape(tokenDto.toString()));
-    }
-
-    @RabbitListener(queues = "${spring.rabbitmq.queue_response}")
-    public void consumer(ProcessMessage message) {
-        log.info("Received Response Message {}", htmlEscape(message.toString()));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.asyncapp.backend2.infrastructure.model;
+package com.asyncapp.backend1.application.queue.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

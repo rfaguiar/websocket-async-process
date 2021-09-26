@@ -1,9 +1,9 @@
 package com.asyncapp.backend1.application.rest;
 
-import com.asyncapp.backend1.domain.service.TokenProcessService;
 import com.asyncapp.backend1.application.request.TokenRequest;
 import com.asyncapp.backend1.application.response.TokenResponse;
 import com.asyncapp.backend1.domain.mapper.TokenMapper;
+import com.asyncapp.backend1.domain.service.TokenProcessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
