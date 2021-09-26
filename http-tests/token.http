@@ -1,0 +1,7 @@
+###
+POST {{base_url}}/token
+Content-Type: application/json
+
+{"username":  "user@mail.com"}
+
+###
