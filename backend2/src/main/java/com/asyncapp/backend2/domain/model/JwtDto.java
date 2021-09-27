@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JwtDto {
     private String solicitationId;
+    private String username;
     private String token;
 }

@@ -36,7 +36,7 @@ public class TokenProcessServiceImpl implements TokenProcessService {
 
     @Override
     public void process(TokenDto tokenDto) throws InterruptedException {
-        TimeUnit.SECONDS.sleep(new Random().nextInt(10));// simulate integrations process time
+        TimeUnit.SECONDS.sleep(new Random().nextInt(7) + 3);// simulate integrations process time
         var jwtDto = generateJwtToken(tokenDto);
         var exchange = configRabbitmqProperties.getExchangeResponse();
         var routingKey = configRabbitmqProperties.getRoutingkey();
@@ -59,6 +59,6 @@ public class TokenProcessServiceImpl implements TokenProcessService {
                 .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-        return new JwtDto(tokenDto.getSolicitationId(), token);
+        return new JwtDto(tokenDto.getSolicitationId(), tokenDto.getUsername(), token);
     }
 }

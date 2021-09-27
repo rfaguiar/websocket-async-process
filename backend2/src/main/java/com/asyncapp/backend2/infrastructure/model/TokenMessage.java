@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TokenMessage {
     private String solicitationId;
+    private String username;
     private String token;
 }
