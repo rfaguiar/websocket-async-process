@@ -23,7 +23,7 @@ public class RabbitMqListener {
 
     @RabbitListener(queues = "${spring.rabbitmq.queue_request}")
     public void consumer(ProcessMessage message) throws InterruptedException {
-        log.info("Received Response Message {}", htmlEscape(message.toString()));
+        log.info("Received Request Message {}", htmlEscape(message.toString()));
         var tokenDto = tokenMapper.toDto(message);
         tokenProcessService.process(tokenDto);
     }

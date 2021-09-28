@@ -1,5 +1,9 @@
 version: '3'
 
+networks:
+  websockets:
+    driver: bridge
+
 services:
   # administration: http://localhost:15672
   rabbitmq:
@@ -9,8 +13,44 @@ services:
       RABBITMQ_DEFAULT_USER: "admin"
       RABBITMQ_DEFAULT_PASS: "admin"
       RABBITMQ_DEFAULT_VHOST: "/"
-    ports:
-      - "15672:15672"
-      - "5672:5672"
+#    ports:
+#      - "15672:15672"
+#      - "5672:5672"
+    networks:
+      - websockets
     volumes:
       - "./rabbitmq:/var/lib/rabbitmq"
+
+  backend1:
+    build:
+      context: backend1/
+    image: "backend1:latest"
+    command: /wait-for-it.sh rabbitmq:15672 -t 30 -- java -Duser.timezone=America/Sao_Paulo -Dserver.port=8080 -jar program.jar
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_RABBITMQ_PORT: "5672"
+      SPRING_RABBITMQ_USERNAME: "admin"
+      SPRING_RABBITMQ_PASSWORD: "admin"
+    ports:
+      - "8080:8080"
+    networks:
+      - websockets
+    depends_on:
+      - rabbitmq
+
+  backend2:
+    build:
+      context: backend2/
+    image: "backend2:latest"
+    command: /wait-for-it.sh rabbitmq:15672 -t 30 -- java -Duser.timezone=America/Sao_Paulo -Dserver.port=8081 -jar program.jar
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_RABBITMQ_PORT: "5672"
+      SPRING_RABBITMQ_USERNAME: "admin"
+      SPRING_RABBITMQ_PASSWORD: "admin"
+#    ports:
+#      - "8081:8081"
+    networks:
+      - websockets
+    depends_on:
+      - rabbitmq
