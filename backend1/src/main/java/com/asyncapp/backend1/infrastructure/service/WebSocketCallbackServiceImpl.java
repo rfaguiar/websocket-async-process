@@ -32,7 +32,7 @@ public class WebSocketCallbackServiceImpl implements TokenCallbackService {
                     .filter(simpUser -> simpUser.getName().equals(jwtDto.getUsername()))
                     .findFirst()
                     .orElseThrow(() -> new UserNotConnectedException(
-                            format("Username {0}, solicitationId {1}", jwtDto.getUsername(), jwtDto.getSolicitationId())
+                            format("UserNotConnectedException: Username {0}, solicitationId {1}", jwtDto.getUsername(), jwtDto.getSolicitationId())
                     ));
             var destination =  format("/topic/{0}", jwtDto.getSolicitationId());
             simpMessagingTemplate.convertAndSendToUser(jwtDto.getUsername(),

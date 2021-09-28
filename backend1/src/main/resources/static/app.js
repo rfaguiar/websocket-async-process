@@ -1,6 +1,6 @@
 let stompClient = null;
-const websocketUrl = 'http://localhost:8080/ws';
-const restTokenUrl = 'http://localhost:8080/token';
+const websocketUrl = '/ws';
+const restTokenUrl = '/token';
 const websocketTopic = '/users/topic/';
 
 function connect({username, solicitationId}) {
