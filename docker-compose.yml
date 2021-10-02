@@ -13,9 +13,9 @@ services:
       RABBITMQ_DEFAULT_USER: "admin"
       RABBITMQ_DEFAULT_PASS: "admin"
       RABBITMQ_DEFAULT_VHOST: "/"
-#    ports:
-#      - "15672:15672"
-#      - "5672:5672"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
     networks:
       - websockets
     volumes:
@@ -38,6 +38,7 @@ services:
       SPRING_RABBITMQ_PORT: "5672"
       SPRING_RABBITMQ_USERNAME: "admin"
       SPRING_RABBITMQ_PASSWORD: "admin"
+      SPRING_SESSION_STORE-TYPE: "redis"
       SPRING_REDIS_HOST: "redis"
       SPRING_REDIS_PORT: "6379"
 #    ports:
@@ -68,8 +69,8 @@ services:
     deploy:
       replicas: 2
 
-  nginx-bff-proxy:
-    build: nginx/
+  app-bff:
+    build: app-bff
     image: nginx-bff-proxy:latest
     container_name: food-nginx-proxy
     ports:
