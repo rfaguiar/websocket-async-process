@@ -12,4 +12,16 @@ module.exports = function(app) {
             },
         })
     );
+    app.use(
+        '/websocket/*',
+        createProxyMiddleware({
+            target: 'http://localhost:8080/ws',
+            ws: true,
+            changeOrigin: true,
+            secure: false,
+            pathRewrite: {
+                '^/websocket': ''
+            },
+        })
+    );
 };

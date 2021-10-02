@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import axios from "axios";
+import connect from "./Websocket";
 
 function App() {
-
   const [username, setUsername] = useState('');
   const [tableData, setTableData] = useState<string[]>([]);
 
@@ -13,9 +13,16 @@ function App() {
 
   async function getToken() {
     let axiosResponse = await axios.post('/api/token', {username: username});
-    let message = "Received solicitationId: " + axiosResponse.data.solicitationId;
+    const solicitationId = axiosResponse.data.solicitationId
+    let message = "Received solicitationId: " + solicitationId;
+    addMessageTableData(message);
+    connect({username: username, id: solicitationId}, addMessageTableData);
+  }
+
+  function addMessageTableData(message: string) {
     setTableData(tableData => [...tableData, message]);
   }
+
 
   return (
       <div id="main-content" className="container">
