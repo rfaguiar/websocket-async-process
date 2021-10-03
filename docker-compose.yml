@@ -72,7 +72,7 @@ services:
   app-bff:
     build: app-bff
     image: nginx-bff-proxy:latest
-    container_name: food-nginx-proxy
+    container_name: nginx-proxy
     ports:
       - "80:80"
     networks:

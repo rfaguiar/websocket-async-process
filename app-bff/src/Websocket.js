@@ -8,11 +8,9 @@ const websocketTopic = '/users/topic/';
 function connect({username, id}, messageCallback) {
     let socket = new SockJS(websocketUrl);
     stompClient = Stomp.over(socket);
-    // @ts-ignore
     stompClient.connect({username: username}, function () {
         messageCallback('Connected websocket with username: ' + username + ', url : ' + websocketUrl);
         messageCallback('subscribe websocket: ' + websocketTopic + id);
-        // @ts-ignore
         stompClient.subscribe(websocketTopic + id, function (message) {
             messageCallback("received token: " + JSON.parse(message.body).content);
             disconnect(messageCallback);
